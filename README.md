@@ -103,8 +103,9 @@ currency_dataset_split/
     └── real/   (136 images)
 ```
 
-> Dataset images and `.h5` model weights are excluded from this repo (too large).  
-> Run `train_cnn.py` to reproduce the model.
+> Dataset images are excluded from this repo.
+> Pre-trained model weights (`currency_cnn_model.h5`) can be downloaded here: **[Insert Google Drive Link Here]**
+> Alternatively, you can run `train_cnn.py` to reproduce and retrain the model locally.
 
 ---
 
