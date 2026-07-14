@@ -13,8 +13,9 @@ from pathlib import Path
 from collections import defaultdict
 
 # CONFIG
-ZIP_PATH       = r"c:\Users\Asus\Downloads\ETA Hackathon\dataset currency fake real.zip"
-OUTPUT_BASE    = r"c:\Users\Asus\Downloads\ETA Hackathon\currency_images"
+PROJECT_ROOT   = Path(__file__).resolve().parents[1]
+ZIP_PATH       = PROJECT_ROOT / "dataset currency fake real.zip"
+OUTPUT_BASE    = PROJECT_ROOT / "currency_images"
 DENOMINATIONS  = {"500", "2000"}
 MIN_FILE_SIZE  = 5_000   # bytes -- below this is flagged as too small
 IMAGE_EXTS     = {".jpg", ".jpeg", ".png", ".bmp", ".webp", ".tiff"}

@@ -46,12 +46,12 @@ from sklearn.metrics import (
 )
 
 # ── CONFIG ────────────────────────────────────────────────────────────────────
-BASE_DIR      = Path(r"c:\Users\Asus\Downloads\ETA Hackathon")
+BASE_DIR      = Path(__file__).resolve().parents[1]
 SPLIT_DIR     = BASE_DIR / "currency_dataset_split"
 MODEL_P2_PATH = BASE_DIR / "currency_cnn_model.h5"
 MODEL_P3_PATH = BASE_DIR / "currency_cnn_model_p3.h5"
-PLOT_P3_PATH  = BASE_DIR / "finetune_p3_curves.png"
-CM_P3_PATH    = BASE_DIR / "confusion_matrix_p3.png"
+PLOT_P3_PATH  = BASE_DIR / "results" / "finetune_p3_curves.png"
+CM_P3_PATH    = BASE_DIR / "results" / "confusion_matrix_p3.png"
 
 IMG_SIZE    = (224, 224)
 BATCH_SIZE  = 32

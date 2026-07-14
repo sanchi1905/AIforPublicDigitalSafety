@@ -7,18 +7,23 @@ A deep-learning pipeline that classifies Indian currency notes as **real** or **
 ## Project Structure
 
 ```
-├── train_cnn.py          # Phase 1 + 2 training (MobileNetV2, ImageNet weights)
-├── finetune_phase3.py    # Phase 3 deep fine-tuning (last-30-layer unfreeze, LR=1e-5)
-├── currency_predictor.py # Importable inference module → predict_image()
-├── test_predictor.py     # Smoke test: runs predict_image on 4 sample images
-├── augment_dataset.py    # Offline augmentation script
-├── organize_dataset.py   # Dataset organisation helper
-├── split_dataset.py      # train/val/test split (70/15/15)
-├── training_curves.png   # Accuracy & loss curves (Phase 1 + 2)
-├── confusion_matrix.png  # Test-set confusion matrix (Phase 2)
-├── finetune_p3_curves.png# Phase 3 training curves
-├── confusion_matrix_p3.png # Side-by-side confusion matrices
-└── augmentation_preview.jpg
+├── data_processing/
+│   ├── organize_dataset.py   # Dataset organisation helper
+│   ├── split_dataset.py      # train/val/test split (70/15/15)
+│   └── augment_dataset.py    # Offline augmentation script
+├── training/
+│   ├── train_cnn.py          # Phase 1 + 2 training (MobileNetV2, ImageNet weights)
+│   └── finetune_phase3.py    # Phase 3 deep fine-tuning (last-30-layer unfreeze, LR=1e-5)
+├── inference/
+│   ├── currency_predictor.py # Importable inference module -> predict_image()
+│   └── test_predictor.py     # Smoke test: runs predict_image on 4 sample images
+├── results/
+│   ├── training_curves.png   # Accuracy & loss curves (Phase 1 + 2)
+│   ├── confusion_matrix.png  # Test-set confusion matrix (Phase 2)
+│   ├── finetune_p3_curves.png# Phase 3 training curves
+│   ├── confusion_matrix_p3.png # Side-by-side confusion matrices
+│   └── augmentation_preview.jpg
+└── README.md
 ```
 
 ---
@@ -52,20 +57,24 @@ pip install tensorflow scikit-learn matplotlib seaborn
 
 ### 2. Train the model
 ```bash
-python train_cnn.py
+python training/train_cnn.py
 ```
 
 ### 3. Run inference
 ```python
+import sys
+sys.path.insert(0, "./inference")
 from currency_predictor import predict_image
 
 result = predict_image("path/to/note.jpg")
 print(result)
-# → {'verdict': 'real', 'confidence': 0.9821, 'raw_score': 0.9821}
+# -> {'verdict': 'real', 'confidence': 0.9821, 'raw_score': 0.9821}
 ```
 
 ### 4. FastAPI endpoint (for your teammate)
 ```python
+import sys
+sys.path.insert(0, "./inference")
 from fastapi import FastAPI, UploadFile, File, HTTPException
 import shutil, tempfile, os
 from currency_predictor import predict_image

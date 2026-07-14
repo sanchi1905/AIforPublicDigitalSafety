@@ -13,7 +13,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 from pathlib import Path
 
 # ── Locate sample images ──────────────────────────────────────────────────────
-BASE     = Path(r"c:\Users\Asus\Downloads\ETA Hackathon")
+BASE     = Path(__file__).resolve().parents[1]
 TEST_DIR = BASE / "currency_dataset_split" / "test"
 
 
@@ -36,7 +36,7 @@ if not samples:
     sys.exit(1)
 
 # ── Import the module ─────────────────────────────────────────────────────────
-sys.path.insert(0, str(BASE))
+sys.path.insert(0, str(BASE / "inference"))
 from currency_predictor import predict_image  # noqa: E402
 
 # ── Check model exists ────────────────────────────────────────────────────────

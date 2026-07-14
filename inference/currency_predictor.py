@@ -41,7 +41,7 @@ _model = None   # singleton – loaded once per process
 
 
 # Default model path – override via env var or the load_model_once() argument
-_DEFAULT_MODEL = Path(r"c:\Users\Asus\Downloads\ETA Hackathon\currency_cnn_model.h5")
+_DEFAULT_MODEL = Path(__file__).resolve().parents[1] / "currency_cnn_model.h5"
 
 IMG_SIZE = (224, 224)   # must match training
 

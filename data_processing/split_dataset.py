@@ -38,9 +38,10 @@ from pathlib import Path
 from collections import defaultdict
 
 # ── CONFIG ─────────────────────────────────────────────────────────────────
-SRC_BASE   = r"c:\Users\Asus\Downloads\ETA Hackathon\currency_images_augmented"
-DEST_BASE  = r"c:\Users\Asus\Downloads\ETA Hackathon\currency_dataset_split"
-CLASSES    = ["real", "fake"]
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+SRC_BASE     = PROJECT_ROOT / "currency_images_augmented"
+DEST_BASE    = PROJECT_ROOT / "currency_dataset_split"
+CLASSES      = ["real", "fake"]
 SEED       = 42
 TRAIN_FRAC = 0.70
 VAL_FRAC   = 0.15

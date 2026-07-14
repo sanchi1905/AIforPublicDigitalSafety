@@ -37,12 +37,12 @@ from sklearn.metrics import (classification_report, confusion_matrix,
                              ConfusionMatrixDisplay)
 
 # ── CONFIG ────────────────────────────────────────────────────────────────────
-BASE_DIR     = Path(r"c:\Users\Asus\Downloads\ETA Hackathon")
+BASE_DIR     = Path(__file__).resolve().parents[1]
 SPLIT_DIR    = BASE_DIR / "currency_dataset_split"
 OUTPUT_DIR   = BASE_DIR
 MODEL_PATH   = OUTPUT_DIR / "currency_cnn_model.h5"
-PLOT_PATH    = OUTPUT_DIR / "training_curves.png"
-CM_PATH      = OUTPUT_DIR / "confusion_matrix.png"
+PLOT_PATH    = BASE_DIR / "results" / "training_curves.png"
+CM_PATH      = BASE_DIR / "results" / "confusion_matrix.png"
 
 IMG_SIZE     = (224, 224)
 BATCH_SIZE   = 32
