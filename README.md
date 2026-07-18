@@ -113,8 +113,8 @@ currency_dataset_split/
 ```
 
 > Dataset images are excluded from this repo.
-> Pre-trained model weights (`currency_cnn_model.h5`) can be downloaded here: **[Insert Google Drive Link Here]**
-> Alternatively, you can run `train_cnn.py` to reproduce and retrain the model locally.
+> Pre-trained model weights (`currency_cnn_model.h5` and `currency_cnn_model_p3.h5`) are included directly in the root of this repository.
+> Alternatively, you can run `training/train_cnn.py` to reproduce and retrain the model locally.
 
 ---
 
