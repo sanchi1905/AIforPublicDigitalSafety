@@ -1,4 +1,7 @@
-# ── Large data files ──────────────────────────────────────────────────────────
+# ── Environment secrets — never commit ────────────────────────────────────────
+.env
+
+# ── Large data files ───────────────────────────────────────────────────────────
 *.zip
 *.tar.gz
 *.tar
@@ -8,12 +11,12 @@ currency_images/
 currency_images_augmented/
 currency_dataset_split/
 
-# ── Trained model weights (use Git LFS or upload separately) ──────────────────
+# ── Trained model weights ──────────────────────────────────────────────────────
 *.keras
 *.pt
 *.pth
 
-# ── Python cache ──────────────────────────────────────────────────────────────
+# ── Python cache ───────────────────────────────────────────────────────────────
 __pycache__/
 *.pyc
 *.pyo
@@ -23,7 +26,7 @@ __pycache__/
 dist/
 build/
 
-# ── Virtual environments ──────────────────────────────────────────────────────
+# ── Virtual environments ───────────────────────────────────────────────────────
 venv/
 .venv/
 env/
