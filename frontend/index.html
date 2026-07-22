@@ -359,8 +359,62 @@
   .signal-dot.dot-heuristic{
     background:var(--alert);
   }
-  .signal-dot.dot-llm{
-    background:#2563EB;
+  /* ---------- action plan & share ---------- */
+  .action-plan-section{
+    margin-top:16px;
+    padding:12px 14px;
+    background:rgba(176,42,32,0.04);
+    border:1px solid rgba(176,42,32,0.18);
+    border-radius:8px;
+  }
+  .action-plan-title{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:12.5px;
+    color:var(--alert);
+    margin-bottom:8px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .action-plan-list{
+    margin:0;
+    padding-left:18px;
+    font-size:12px;
+    color:var(--text-hi);
+    line-height:1.55;
+  }
+  .action-plan-list li{
+    margin-bottom:5px;
+  }
+  .action-plan-list a{
+    color:var(--brand);
+    font-weight:600;
+    text-decoration:underline;
+  }
+  .share-section{
+    margin-top:14px;
+  }
+  .wa-share-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:#25D366;
+    color:#FFFFFF;
+    border:none;
+    border-radius:6px;
+    padding:8px 14px;
+    font-family:'Manrope', sans-serif;
+    font-weight:700;
+    font-size:12px;
+    cursor:pointer;
+    transition:background 0.2s, transform 0.1s;
+  }
+  .wa-share-btn:hover{
+    background:#20BD5A;
+  }
+  .wa-share-btn:active{
+    transform:scale(0.98);
   }
 
   footer{
@@ -582,11 +636,23 @@
     return { label, isHeuristic };
   }
 
+  function shareScamWarning(){
+    const textEl = document.getElementById('scam-text');
+    const text = textEl ? textEl.value.trim() : '';
+    const snippet = text.length > 90 ? text.substring(0, 90) + '...' : text;
+    const waMessage = `⚠️ SCAM ALERT WARNING!\n\nI just scanned a suspicious message using Digital Public Safety Console:\n\n"${snippet}"\n\nVerdict: 🚨 SCAM / SUSPICIOUS\n\nPlease DO NOT click any links, share OTPs, or transfer money! Pass this warning to protect family & friends.`;
+    const url = `https://wa.me/?text=${encodeURIComponent(waMessage)}`;
+    window.open(url, '_blank');
+  }
+
   function renderReading(elId, { verdict, confidence, explanation, tags, rawSignals }){
     const el = document.getElementById(elId);
     const pct = Math.round((confidence || 0) * 100);
     const info = verdictInfo(verdict);
     const offset = GAUGE_CIRC * (1 - pct / 100);
+
+    const vLower = (verdict || '').toLowerCase();
+    const isThreat = vLower === 'scam' || vLower === 'suspicious' || vLower === 'fake';
 
     let signalsHtml = '';
     if (rawSignals && rawSignals.length > 0) {
@@ -611,6 +677,34 @@
       `;
     }
 
+    let actionPlanHtml = '';
+    let shareHtml = '';
+
+    if (isThreat) {
+      actionPlanHtml = `
+        <div class="action-plan-section">
+          <div class="action-plan-title">🛡️ Recommended Emergency Actions</div>
+          <ul class="action-plan-list">
+            <li><strong>Do NOT click link or share OTP:</strong> Never enter sensitive banking credentials on unverified links.</li>
+            <li><strong>Report Cybercrime:</strong> Call <strong>1930</strong> (National Helpline) or file a report at <a href="https://cybercrime.gov.in" target="_blank" rel="noopener">cybercrime.gov.in</a>.</li>
+            <li><strong>Freeze Account:</strong> Contact your bank's official customer support immediately if details were entered.</li>
+            <li><strong>Block & Report Sender:</strong> Mark message as spam and block sender on WhatsApp or SMS.</li>
+          </ul>
+        </div>
+      `;
+
+      shareHtml = `
+        <div class="share-section">
+          <button type="button" class="wa-share-btn" onclick="shareScamWarning()">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+              <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984 0 1.763.459 3.484 1.334 5.003L2 22l5.148-1.348a9.97 9.97 0 004.862 1.258h.004c5.507 0 9.99-4.478 9.99-9.984A9.943 9.943 0 0012.012 2z"/>
+            </svg>
+            Share Warning on WhatsApp
+          </button>
+        </div>
+      `;
+    }
+
     el.innerHTML = `
       <div class="gauge">
         <svg viewBox="0 0 70 70">
@@ -627,6 +721,8 @@
         <div class="reading-explain">${explanation}</div>
         ${tags && tags.length ? `<div class="reading-tags">${tags.map(t => `<span>${t}</span>`).join('')}</div>` : ''}
         ${signalsHtml}
+        ${actionPlanHtml}
+        ${shareHtml}
       </div>
     `;
     el.classList.add('show');
