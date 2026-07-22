@@ -538,15 +538,46 @@
     <div class="reading" id="currency-reading"></div>
   </section>
 
+  <section class="panel" id="panel-voice">
+    <div class="panel-top">
+      <svg class="panel-icon" viewBox="0 0 38 38" fill="none">
+        <rect x="4" y="6" width="30" height="26" rx="5" stroke="var(--brand)" stroke-width="1.6"/>
+        <path d="M15 14v10M19 11v16M23 14v10" stroke="var(--brand)" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <h2>Voice Message Scan</h2>
+        <p class="sub">Transcribes a call recording or voice note, then runs it through the same scam check.</p>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Audio File</label>
+      <div class="dropzone" id="voice-drop" onclick="document.getElementById('voice-file').click()" tabindex="0">
+        <p id="voice-drop-text">Click to upload a voice note or call recording</p>
+        <input type="file" id="voice-file" accept="audio/*" style="display:none" onchange="previewVoice(event)">
+      </div>
+    </div>
+
+    <button class="action" id="voice-btn" onclick="checkVoice()">
+      <span class="spinner"></span>
+      <span class="btn-label">Transcribe &amp; scan</span>
+    </button>
+
+    <div class="error-msg" id="voice-error"></div>
+    <div class="reading" id="voice-reading"></div>
+  </section>
+
 </div>
 
 <footer>AI FOR PUBLIC DIGITAL SAFETY — HACKATHON BUILD — NOT FOR PRODUCTION USE</footer>
 
 <script>
   const SCAM_API_URL = "http://localhost:8001/predict/scam";
+  const VOICE_API_URL = "http://localhost:8001/predict/scam-audio";
   const CURRENCY_API_URL = "https://fastball-accompany-plot.ngrok-free.dev/predict";
 
   let currencyFile = null;
+  let voiceFile = null;
   const GAUGE_CIRC = 2 * Math.PI * 29; // r=29
 
   // Session Statistics Counters
@@ -598,6 +629,19 @@
     reader.readAsDataURL(file);
   }
 
+  function previewVoice(e){
+    const file = e.target.files[0];
+    if (!file) return;
+    voiceFile = file;
+    const drop = document.getElementById('voice-drop');
+    drop.innerHTML = `
+      <div style="font-size:24px; margin-bottom:8px;">🎵🎤</div>
+      <p style="margin:0; font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--text-hi);">${file.name}</p>
+      <p style="margin-top:8px; font-size:12px; color:var(--text-dim);">Click to change file</p>
+      <input type="file" id="voice-file" accept="audio/*" style="display:none" onchange="previewVoice(event)">
+    `;
+  }
+
   function setLoading(btnId, isLoading){
     const btn = document.getElementById(btnId);
     btn.classList.toggle('loading', isLoading);
@@ -645,7 +689,7 @@
     window.open(url, '_blank');
   }
 
-  function renderReading(elId, { verdict, confidence, explanation, tags, rawSignals }){
+  function renderReading(elId, { verdict, confidence, explanation, tags, rawSignals, transcript }){
     const el = document.getElementById(elId);
     const pct = Math.round((confidence || 0) * 100);
     const info = verdictInfo(verdict);
@@ -705,6 +749,16 @@
       `;
     }
 
+    let transcriptHtml = '';
+    if (transcript) {
+      transcriptHtml = `
+        <div style="background:var(--brand-light); border:1px solid var(--line); border-radius:6px; padding:12px; margin-bottom:14px;">
+          <div style="font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--brand); text-transform:uppercase; margin-bottom:6px;">Transcript</div>
+          <div style="font-style:italic; font-size:13px; color:var(--text-hi); line-height:1.5;">"${transcript}"</div>
+        </div>
+      `;
+    }
+
     el.innerHTML = `
       <div class="gauge">
         <svg viewBox="0 0 70 70">
@@ -717,6 +771,7 @@
         <div class="gauge-pct">${pct}%</div>
       </div>
       <div class="reading-body">
+        ${transcriptHtml}
         <span class="verdict-badge ${info.cls}">${verdict}</span>
         <div class="reading-explain">${explanation}</div>
         ${tags && tags.length ? `<div class="reading-tags">${tags.map(t => `<span>${t}</span>`).join('')}</div>` : ''}
@@ -790,6 +845,36 @@
       showError('currency-error', `Couldn't reach the scan service at ${CURRENCY_API_URL} (${err.message}).`);
     }finally{
       setLoading('currency-btn', false);
+    }
+  }
+
+  async function checkVoice(){
+    clearError('voice-error');
+    document.getElementById('voice-reading').classList.remove('show');
+
+    if (!voiceFile){ showError('voice-error', 'Upload an audio file first.'); return; }
+
+    setLoading('voice-btn', true);
+    try{
+      const formData = new FormData();
+      formData.append('file', voiceFile);
+      const res = await fetch(VOICE_API_URL, { method:'POST', body:formData });
+      if (!res.ok) throw new Error(`server returned ${res.status}`);
+      const data = await res.json();
+      updateStats(data.verdict);
+      const signals = (data.raw_output && data.raw_output.key_signals) || [];
+      renderReading('voice-reading', {
+        verdict: data.verdict,
+        confidence: data.confidence,
+        explanation: data.explanation,
+        tags: signals.slice(0, 4),
+        rawSignals: signals,
+        transcript: data.raw_output && data.raw_output.transcript
+      });
+    }catch(err){
+      showError('voice-error', `Couldn't reach the scan service at ${VOICE_API_URL} (${err.message}).`);
+    }finally{
+      setLoading('voice-btn', false);
     }
   }
 </script>
