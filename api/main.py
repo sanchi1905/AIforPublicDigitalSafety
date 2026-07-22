@@ -17,6 +17,7 @@ app = FastAPI(title="Scam Detection Service")
 
 FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "..", "frontend")
 app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
+app.mount("/scams", StaticFiles(directory=os.path.join(FRONTEND_DIR, "scams")), name="scams")
 
 
 @app.get("/")

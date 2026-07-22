@@ -146,7 +146,7 @@
     border-radius:10px;
     padding:28px;
     margin:0 auto 26px;
-    max-width:640px;
+    max-width:1080px;
     box-shadow:0 4px 16px rgba(0,0,0,0.04);
   }
 
@@ -425,6 +425,235 @@
     letter-spacing:0.04em;
     color:var(--text-dim);
   }
+  footer a,
+  .sidebar-footer a,
+  .disclaimer-bar a{
+    color:var(--brand);
+    text-decoration:none;
+    font-weight:700;
+  }
+  footer a:hover,
+  .sidebar-footer a:hover,
+  .disclaimer-bar a:hover{
+    text-decoration:underline;
+  }
+
+  /* ---------- new sections: methodology, disclaimer, sidebar ---------- */
+  .method-steps{ display:flex; gap:20px; }
+  .method-step{ flex:1; margin:0; padding:24px; }
+  .step-title{ font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:15px; margin-bottom:12px; display:flex; align-items:center; gap:10px; color:var(--text-hi); line-height:1.3;}
+  .step-num{ display:flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:var(--brand); color:#fff; font-family:'Manrope', sans-serif; font-size:12px; font-weight:700; flex-shrink:0; }
+  .method-step p{ margin:0; font-size:13px; color:var(--text-dim); line-height:1.6; }
+  @media (max-width:760px){
+    .method-steps{ flex-direction:column; gap:16px; }
+  }
+
+  .disclaimer-bar{
+    background:var(--brand-light);
+    color:var(--text-dim);
+    padding:14px 24px;
+    font-size:12px;
+    line-height:1.55;
+    margin-bottom:30px;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .disclaimer-bar-inner{
+    max-width:1080px;
+    margin:0 auto;
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+  }
+  .disclaimer-bar svg{width:18px; height:18px; flex-shrink:0; stroke:var(--brand); margin-top:1px;}
+
+  .main-layout {
+    max-width: 1420px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    padding: 0 24px 40px;
+  }
+  .main-col {
+    flex: 1;
+    min-width: 0;
+  }
+  .main-column {
+    max-width: 1080px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .main-col .hero, .main-col .methodology, .main-col .panels {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    margin-top: 0;
+  }
+  .main-col .hero { padding-top: 20px; }
+  .main-col .panels { padding-bottom: 20px; margin-bottom: 0; margin-top: 40px; }
+
+  .side-col {
+    width: 320px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 24px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+  }
+  
+  .sidebar-header {
+    padding: 24px;
+    border-bottom: 1px solid var(--line);
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-radius: 12px 12px 0 0;
+  }
+  .sidebar-header h2 {
+    margin: 0 0 4px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    color: var(--text-hi);
+  }
+  .sidebar-header .sub {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--text-dim);
+  }
+  .sidebar-content {
+    flex: 1;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .sidebar-card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px;
+    transition: border-color 0.2s;
+    position: relative;
+  }
+  .sidebar-card:hover { border-color: var(--brand); cursor: pointer; }
+  .sidebar-card h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .sidebar-card h3 a::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .sidebar-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    gap: 8px;
+  }
+  .card-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .icon-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--brand-light);
+    color: var(--brand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .icon-badge svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--brand);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+  .sidebar-card h3 {
+    margin: 0;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14.5px;
+    color: var(--text-hi);
+    line-height: 1.3;
+  }
+  .sidebar-tag{ font-family:'JetBrains Mono', monospace; font-size:9.5px; padding:3px 6px; border-radius:4px; background:rgba(176,42,32,0.1); color:var(--alert); flex-shrink:0; text-transform:uppercase; font-weight:600;}
+  .sidebar-tag.amber{ background:rgba(138,94,10,0.1); color:var(--pending); }
+  .sidebar-card p {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+  .sidebar-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--line);
+    background: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    text-align: center;
+    border-radius: 0 0 12px 12px;
+  }
+  .sidebar-footer a{ color:var(--brand); }
+
+  .sidebar-close-btn { display: none; background:none; border:none; cursor:pointer; color:var(--text-dim); padding:4px; margin-left: 10px;}
+  .mobile-toggle {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--brand);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 24px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 14.5px;
+    z-index: 90;
+    box-shadow: 0 4px 12px rgba(27,63,110,0.3);
+    cursor: pointer;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  @media (max-width: 900px) {
+    .main-layout { display: block; padding: 0 24px 40px; }
+    .side-col { display: none; }
+    .mobile-toggle { display: flex; }
+    .side-col.mobile-open {
+      display: flex;
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      max-height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      border: none;
+      border-radius: 0;
+    }
+    .side-col.mobile-open .sidebar-header { border-radius: 0; }
+    .side-col.mobile-open .sidebar-footer { border-radius: 0; }
+    .sidebar-close-btn { display: block; }
+  }
 </style>
 </head>
 <body>
@@ -444,7 +673,10 @@
   </div>
 </div>
 
-<div class="hero">
+<div class="main-layout">
+  <div class="main-col">
+    <div class="main-column">
+      <div class="hero">
   <div class="radar-hero">
     <svg viewBox="0 0 180 180">
       <circle class="radar-ring" cx="90" cy="90" r="34"/>
@@ -469,6 +701,24 @@
   <div class="eyebrow">Two threats, one scan</div>
   <h1>Check a message.<br>Check a note.<br>Get a <em>clear read.</em></h1>
   <p>Paste a suspicious text or link to scan it for scam patterns, or upload a photo of a currency note to check it against known counterfeit signals.</p>
+</div>
+
+<div class="methodology" style="max-width:1080px; margin:20px auto 0; padding:0 24px;">
+  <h2 style="font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:20px; color:var(--text-hi); margin:0 0 16px;">How it works</h2>
+  <div class="method-steps">
+    <div class="panel method-step">
+      <div class="step-title"><span class="step-num">1</span>Rule-based screening</div>
+      <p>Every message and voice transcript is first checked against known scam patterns — urgency language, OTP/credential requests, shortened links, lookalike domains, and prize-bait phrasing.</p>
+    </div>
+    <div class="panel method-step">
+      <div class="step-title"><span class="step-num">2</span>AI judgment</div>
+      <p>Groq's Llama 3.3 70B model reviews the message in context alongside the rule-based flags, since rules alone can misread a real bank OTP as suspicious. The AI's read and the rules are combined into one verdict.</p>
+    </div>
+    <div class="panel method-step">
+      <div class="step-title"><span class="step-num">3</span>Specialized models for other formats</div>
+      <p>Currency photos are checked by a MobileNetV2 image classifier trained on genuine vs counterfeit notes. Voice recordings are transcribed with Whisper, then run through the same text pipeline as step 1 and 2.</p>
+    </div>
+  </div>
 </div>
 
 <div class="panels">
@@ -567,6 +817,170 @@
     <div class="reading" id="voice-reading"></div>
   </section>
 
+</div> <!-- panels -->
+    </div> <!-- main-column -->
+  </div> <!-- main-col -->
+
+  <aside class="side-col" id="sidebar">
+    <div class="sidebar-header">
+      <div>
+        <h2>Know the risks</h2>
+        <p class="sub">Common scam patterns active in India right now.</p>
+      </div>
+      <button class="sidebar-close-btn" onclick="toggleSidebar()" aria-label="Close Sidebar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="sidebar-content">
+      
+      <div class="sidebar-card">
+        <div class="sidebar-card-top">
+          <div class="card-header-left">
+            <div class="icon-badge">
+              <svg viewBox="0 0 24 24"><path d="M12 2l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V5l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+            </div>
+            <h3><a href="/scams/digital-arrest.html">Digital Arrest Scam</a></h3>
+          </div>
+          <span class="sidebar-tag">Still Active</span>
+        </div>
+        <p>Fraudsters posing as police or CBI officials claim you're under investigation and demand money or video-call "surveillance" to avoid arrest. Real police never make arrests over a phone call.</p>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="sidebar-card-top">
+          <div class="card-header-left">
+            <div class="icon-badge">
+              <svg viewBox="0 0 24 24"><path d="M6 2h9l4 4v16H6z"/><path d="M15 2v4h4"/><circle cx="12" cy="14" r="1"/><path d="M12 10v2"/></svg>
+            </div>
+            <h3><a href="/scams/fake-kyc.html">Fake KYC Update</a></h3>
+          </div>
+          <span class="sidebar-tag">Still Active</span>
+        </div>
+        <p>Messages claiming your bank/UPI account will be blocked unless you "update KYC" via a link, which steals your banking credentials.</p>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="sidebar-card-top">
+          <div class="card-header-left">
+            <div class="icon-badge">
+              <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M14 10l3 3-3 3"/></svg>
+            </div>
+            <h3><a href="/scams/screen-sharing.html">Screen-Sharing App Fraud</a></h3>
+          </div>
+          <span class="sidebar-tag">Still Active</span>
+        </div>
+        <p>Scammers ask you to install AnyDesk or TeamViewer to "help" with a refund or issue, then use screen access to drain your account.</p>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="sidebar-card-top">
+          <div class="card-header-left">
+            <div class="icon-badge">
+              <svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/><rect x="9" y="11" width="6" height="6" rx="1"/></svg>
+            </div>
+            <h3><a href="/scams/sim-swap.html">SIM Swap Fraud</a></h3>
+          </div>
+          <span class="sidebar-tag">Still Active</span>
+        </div>
+        <p>Criminals convince your telecom provider to issue a duplicate SIM, letting them intercept your OTPs and take over bank accounts.</p>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="sidebar-card-top">
+          <div class="card-header-left">
+            <div class="icon-badge">
+              <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M12 12v3"/><circle cx="12" cy="17" r="0.8" fill="currentColor"/></svg>
+            </div>
+            <h3><a href="/scams/fake-jobs.html">Fake Job / Task Scams</a></h3>
+          </div>
+          <span class="sidebar-tag amber">Common</span>
+        </div>
+        <p>Offers of easy money for "liking videos" or "completing tasks" that require an upfront deposit you never get back.</p>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="sidebar-card-top">
+          <div class="card-header-left">
+            <div class="icon-badge">
+              <svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M12 17v.01"/><path d="M12 6v6"/></svg>
+            </div>
+            <h3><a href="/scams/loan-apps.html">Loan App Harassment</a></h3>
+          </div>
+          <span class="sidebar-tag">Still Active</span>
+        </div>
+        <p>Unregulated loan apps charge hidden fees, then harass contacts from your phone's address book if you're late on payment.</p>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="sidebar-card-top">
+          <div class="card-header-left">
+            <div class="icon-badge">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM19 14h2M14 19h2M19 19h2v2h-2z"/></svg>
+            </div>
+            <h3><a href="/scams/qr-code.html">QR Code Payment Scam</a></h3>
+          </div>
+          <span class="sidebar-tag">Still Active</span>
+        </div>
+        <p>Scammers send a QR code claiming you'll receive money by scanning it — but scanning a QR code to *receive* money isn't how UPI works; it always requests a payment instead.</p>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="sidebar-card-top">
+          <div class="card-header-left">
+            <div class="icon-badge">
+              <svg viewBox="0 0 24 24"><path d="M3 12h2l2-6 3 14 3-11 3 8 2-5h3"/></svg>
+            </div>
+            <h3><a href="/scams/deepfake-voice.html">Deepfake Voice Scams</a></h3>
+          </div>
+          <span class="sidebar-tag">Emerging</span>
+        </div>
+        <p>AI-cloned voices of family members calling in "emergencies" asking for urgent money transfers. Always verify by calling back on a known number.</p>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="sidebar-card-top">
+          <div class="card-header-left">
+            <div class="icon-badge">
+              <svg viewBox="0 0 24 24"><path d="M12 21s-8-5.5-8-11a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 5.5-8 11-8 11z"/><path d="M12 8v4"/><circle cx="12" cy="15" r="0.6" fill="currentColor"/></svg>
+            </div>
+            <h3><a href="/scams/romance-scam.html">Matrimonial / Romance Scams</a></h3>
+          </div>
+          <span class="sidebar-tag amber">Common</span>
+        </div>
+        <p>Fake profiles build trust over weeks before requesting money for a "medical emergency" or "travel cost."</p>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="sidebar-card-top">
+          <div class="card-header-left">
+            <div class="icon-badge">
+              <svg viewBox="0 0 24 24"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg>
+            </div>
+            <h3><a href="/scams/electricity-bill.html">Electricity Bill Disconnection Scam</a></h3>
+          </div>
+          <span class="sidebar-tag">Still Active</span>
+        </div>
+        <p>Fake SMS threatening power disconnection unless you pay via a suspicious link immediately.</p>
+      </div>
+
+    </div>
+    <div class="sidebar-footer">
+      Cybercrime helpline: <a href="tel:1930">1930</a> · <a href="https://cybercrime.gov.in" target="_blank" rel="noopener">cybercrime.gov.in</a>
+    </div>
+  </aside>
+
+</div> <!-- main-layout -->
+
+<button class="mobile-toggle" onclick="toggleSidebar()">
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+  Know the risks
+</button>
+
+<div class="disclaimer-bar">
+  <div class="disclaimer-bar-inner">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+    <span>This tool provides an AI-generated assessment to help you spot potential risks — it is not a substitute for verifying directly with your bank, the RBI, or local authorities. When in doubt, don't click links or share OTPs, and report suspicious activity to <a href="https://cybercrime.gov.in" target="_blank" rel="noopener">cybercrime.gov.in</a> or call <a href="tel:1930">1930</a>.</span>
+  </div>
 </div>
 
 <footer>AI FOR PUBLIC DIGITAL SAFETY — HACKATHON BUILD — NOT FOR PRODUCTION USE</footer>
@@ -579,6 +993,10 @@
   let currencyFile = null;
   let voiceFile = null;
   const GAUGE_CIRC = 2 * Math.PI * 29; // r=29
+
+  function toggleSidebar(){
+    document.getElementById('sidebar').classList.toggle('mobile-open');
+  }
 
   // Session Statistics Counters
   let scansRun = 0;
