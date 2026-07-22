@@ -1,9 +1,10 @@
 # AI for Public Digital Safety — ETA Hackathon
 
-A two-module AI pipeline for public digital safety, built for the ETA Hackathon:
+A three-part AI pipeline for public digital safety, built for the ETA Hackathon:
 
 1. **Currency Fraud Detector** — classifies Indian currency notes as real or fake using MobileNetV2
 2. **Scam Detection Module** — classifies SMS/WhatsApp messages as `scam`, `suspicious`, or `safe` using a heuristic + LLM hybrid pipeline
+3. **Audio Scam Scanner** — transcribes voice notes or call recordings, then runs the same scam detection pipeline on the transcript
 
 ---
 
@@ -27,7 +28,8 @@ A two-module AI pipeline for public digital safety, built for the ETA Hackathon:
 │   ├── extract.py            # Fast heuristic checks (URL, urgency, OTP, etc.)
 │   └── merge.py              # Merge heuristic + LLM outputs
 ├── llm/
-│   └── classify.py           # Groq (Llama 3.3 70B) LLM classifier
+│   ├── classify.py           # Groq (Llama 3.3 70B) LLM classifier
+│   └── transcribe.py         # Groq (Whisper-large-v3) audio transcription
 ├── frontend/
 │   └── index.html            # Redesigned light-theme frontend
 ├── tests/
@@ -87,12 +89,23 @@ Hybrid heuristic + LLM pipeline that classifies SMS/WhatsApp-style messages
 
 ### How it works
 
-1. **Heuristic pass** (`heuristics/extract.py`) — fast, free, explainable checks:
+1. **Audio Transcription** (`llm/transcribe.py`) — **(Optional)** If the input is a voice note or call recording, it is first transcribed to text via Groq's Whisper API (`whisper-large-v3`).
+2. **Heuristic pass** (`heuristics/extract.py`) — fast, free, explainable checks:
    URL shorteners, IP-based URLs, suspicious TLDs, lookalike domains against
    known Indian brands, urgency language, OTP/PIN/UPI requests, prize/lottery bait.
-2. **LLM pass** (`llm/classify.py`) — sends the message + heuristic flags to
+3. **LLM pass** (`llm/classify.py`) — sends the text/transcript + heuristic flags to
    Groq (Llama 3.3 70B) for contextual judgment and a human-readable explanation.
-3. **Merge** (`heuristics/merge.py`) — heuristic-only fallback if LLM call fails.
+4. **Merge** (`heuristics/merge.py`) — heuristic-only fallback if LLM call fails.
+
+### Audio Scam Scanner
+
+The same scam detection stack also supports audio inputs through `llm/transcribe.py` and the `/predict/scam-audio` endpoint in `api/main.py`.
+
+Flow:
+
+1. Upload a voice note or call recording.
+2. Transcribe the audio to text with Groq Whisper (`whisper-large-v3`).
+3. Run the same heuristic + LLM scam classification used for text messages.
 
 ### Quick Start
 
@@ -116,6 +129,12 @@ POST /predict/scam
   "confidence": 0.93,
   "explanation": "This message uses urgency and a suspicious lookalike link to try to steal your bank login."
 }
+```
+
+```
+POST /predict/scam-audio
+Content-Type: multipart/form-data
+-F "file=@voice_note.mp3"
 ```
 
 ---
